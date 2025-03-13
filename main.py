@@ -12,7 +12,13 @@ def main():
     color = (0,0,0)
     x = SCREEN_WIDTH/2
     y = SCREEN_HEIGHT/2
+
+    # must be declarated before Player instance
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     player = Player(x, y)
+
 
     while True:
         dt = fps.tick(60)/1000
@@ -21,14 +27,13 @@ def main():
             if event.type == pygame.QUIT:
                 return False
                 
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+        for drawing in drawable:
+            drawing.draw(screen)
+
         pygame.display.flip()
 
         
-
-
-
 
 if __name__ == "__main__":
     main()
